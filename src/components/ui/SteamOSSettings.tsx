@@ -4,6 +4,7 @@ interface Props {
   tdp: string;
   scaling: string;
   gpuClock: string;
+  protonVersion: string;
 }
 
 const SteamOSSettings = (props: Props) => (
@@ -27,6 +28,10 @@ const SteamOSSettings = (props: Props) => (
     <tr>
       <td style={{ width: '112px' }}>GPU Clock</td>
       <td style={{ textAlign: 'right' }}><b>{props.gpuClock}</b></td>
+    </tr>
+    <tr>
+      <td style={{ width: '112px' }}>Proton Version</td>
+      <td style={{ textAlign: 'right' }}><b>{props.protonVersion}</b></td>
     </tr>
   </table>
 );

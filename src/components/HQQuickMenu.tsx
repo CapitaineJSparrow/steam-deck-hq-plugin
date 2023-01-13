@@ -5,10 +5,13 @@ import {
   PanelSection,
   PanelSectionRow,
   ServerAPI,
+  Focusable,
 } from "decky-frontend-lib";
 import Config from "../lib/Config";
 import { HQResult } from "../types";
 import SteamOSSettings from "./ui/SteamOSSettings";
+import FocusableTitle from "./ui/FocusableTitle";
+import BatteryUsage from "./ui/BatteryUsage";
 
 export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
   const [data, setData] = useState<HQResult[]>([]);
@@ -45,7 +48,7 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
             : (
               <span>
                 <PanelSectionRow>
-                  <h3 style={{ textAlign: "center", margin: 0, padding: 0 }}>Steam OS Settings</h3>
+                  <FocusableTitle label={"Steam OS Settings"} />
                   <hr />
                   <SteamOSSettings
                     fpsCap={game.acf.optimized_and_recommended_settings.steamos_settings.fps_cap}
@@ -53,13 +56,26 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
                     scaling={game.acf.optimized_and_recommended_settings.steamos_settings.scaling_filter}
                     refreshRate={game.acf.optimized_and_recommended_settings.steamos_settings.fps_refresh_rate}
                     gpuClock={game.acf.optimized_and_recommended_settings.steamos_settings.gpu_clock_frequency}
+                    protonVersion={game.acf.optimized_and_recommended_settings.proton_version}
                   />
-                </PanelSectionRow>
-                <PanelSectionRow>
-                  <h3 style={{ textAlign: 'center', color: 'yellow', margin: 0, padding: 0 }}>
+                  <h3 style={{ textAlign: 'center', color: 'yellow', margin: 0, padding: 0, marginBottom: '6px' }}>
                     { Array(game.acf.sdhq_rating).fill("★").map(el => el) }
                     { Array(5 - game.acf.sdhq_rating).fill("☆").map(el => el) }
                   </h3>
+                </PanelSectionRow>
+
+                <PanelSectionRow>
+                  <FocusableTitle label={"Projected Battery Usage and Temp"} />
+                  <hr />
+                  <BatteryUsage
+                    battery={game.acf.optimized_and_recommended_settings.projected_battery_usage_and_temperature.wattage}
+                    temps={game.acf.optimized_and_recommended_settings.projected_battery_usage_and_temperature.temperatures}
+                    duration={game.acf.optimized_and_recommended_settings.projected_battery_usage_and_temperature.gameplay_time}
+                  />
+                </PanelSectionRow>
+
+                <PanelSectionRow>
+                  <FocusableTitle label={"Description"} />
                   <p dangerouslySetInnerHTML={{ __html: game.excerpt.rendered }} />
                 </PanelSectionRow>
               </span>
@@ -68,8 +84,9 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
       </PanelSectionRow>
       <PanelSectionRow>
         <div style={{display: "flex", justifyContent: "center", margin: 0 }}>
-          <img width={200} src={logo} />
+            <img width={200} src={logo} />
         </div>
+        <FocusableTitle label={"Visit Steam Deck HQ website"} />
       </PanelSectionRow>
     </PanelSection>
   );
