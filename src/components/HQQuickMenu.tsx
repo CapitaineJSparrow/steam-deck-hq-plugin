@@ -8,6 +8,7 @@ import {
 } from "decky-frontend-lib";
 import Config from "../lib/Config";
 import { HQResult } from "../types";
+import SteamOSSettings from "./ui/SteamOSSettings";
 
 export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
   const [data, setData] = useState<HQResult[]>([]);
@@ -15,9 +16,13 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
   useEffect(() => {
     if (Config.pageId === -1) return;
     serverAPI!.callPluginMethod("add", { appid: Config.pageId }).then(d => setData(d["result"] as unknown as HQResult[]));
+
+    return () => {
+      setData([])
+    }
   }, []);
 
-  const game: HQResult = data[0];
+  const game = data[0] as HQResult | undefined;
 
   if (Config.pageId === -1) {
     return (
@@ -28,12 +33,7 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
   }
 
   return (
-    <PanelSection>
-      <PanelSectionRow>
-        <div style={{display: "flex", justifyContent: "center", margin: 0 }}>
-          <img width={200} src={logo} />
-        </div>
-      </PanelSectionRow>
+    <PanelSection title={game?.title.rendered}>
       <PanelSectionRow>
         {
           !game
@@ -44,32 +44,19 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
             )
             : (
               <span>
-                <PanelSection title="Steam OS Settings">
-                  <table>
-                    <tr>
-                      <td style={{ width: '112px' }}>FPS Cap</td>
-                      <td><b>{game.acf.optimized_and_recommended_settings.steamos_settings.fps_cap}</b></td>
-                    </tr>
-                    <tr>
-                      <td style={{ width: '112px' }}>Refresh Rate</td>
-                      <td><b>{game.acf.optimized_and_recommended_settings.steamos_settings.fps_refresh_rate}</b></td>
-                    </tr>
-                    <tr>
-                      <td style={{ width: '112px' }}>TDP Limit</td>
-                      <td><b>{game.acf.optimized_and_recommended_settings.steamos_settings.tdp_limit}</b></td>
-                    </tr>
-                    <tr>
-                      <td style={{ width: '112px' }}>Scaling Filter</td>
-                      <td><b>{game.acf.optimized_and_recommended_settings.steamos_settings.scaling_filter}</b></td>
-                    </tr>
-                    <tr>
-                      <td style={{ width: '112px' }}>GPU Clock</td>
-                      <td><b>{game.acf.optimized_and_recommended_settings.steamos_settings.gpu_clock_frequency}</b></td>
-                    </tr>
-                  </table>
-                </PanelSection>
                 <PanelSectionRow>
-                  <h3 style={{ textAlign: 'center', color: 'yellow' }}>
+                  <h3 style={{ textAlign: "center", margin: 0, padding: 0 }}>Steam OS Settings</h3>
+                  <hr />
+                  <SteamOSSettings
+                    fpsCap={game.acf.optimized_and_recommended_settings.steamos_settings.fps_cap}
+                    tdp={game.acf.optimized_and_recommended_settings.steamos_settings.tdp_limit}
+                    scaling={game.acf.optimized_and_recommended_settings.steamos_settings.scaling_filter}
+                    refreshRate={game.acf.optimized_and_recommended_settings.steamos_settings.fps_refresh_rate}
+                    gpuClock={game.acf.optimized_and_recommended_settings.steamos_settings.gpu_clock_frequency}
+                  />
+                </PanelSectionRow>
+                <PanelSectionRow>
+                  <h3 style={{ textAlign: 'center', color: 'yellow', margin: 0, padding: 0 }}>
                     { Array(game.acf.sdhq_rating).fill("★").map(el => el) }
                     { Array(5 - game.acf.sdhq_rating).fill("☆").map(el => el) }
                   </h3>
@@ -78,6 +65,11 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
               </span>
             )
         }
+      </PanelSectionRow>
+      <PanelSectionRow>
+        <div style={{display: "flex", justifyContent: "center", margin: 0 }}>
+          <img width={200} src={logo} />
+        </div>
       </PanelSectionRow>
     </PanelSection>
   );
