@@ -5,13 +5,21 @@ import {
   PanelSection,
   PanelSectionRow,
   ServerAPI,
-  Focusable,
 } from "decky-frontend-lib";
 import Config from "../lib/Config";
 import { HQResult } from "../types";
 import SteamOSSettings from "./ui/SteamOSSettings";
 import FocusableTitle from "./ui/FocusableTitle";
 import BatteryUsage from "./ui/BatteryUsage";
+
+const getGamesSettingsFromHTMLMess = (s: string) => {
+  return s
+    .replace(/<[^>]*>?/gm, '')
+    .replace(/\r/g, '@')
+    .replace(/\n/g, '@')
+    .split('@')
+    .filter(el => el.length > 0)
+}
 
 export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
   const [data, setData] = useState<HQResult[]>([]);
@@ -50,6 +58,11 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
                 <PanelSectionRow>
                   <FocusableTitle label={"Steam OS Settings"} />
                   <hr />
+                  <p style={{ textAlign: 'center' }}>
+                    <i>
+                      SDHQ recommended settings
+                    </i>
+                  </p>
                   <SteamOSSettings
                     fpsCap={game.acf.optimized_and_recommended_settings.steamos_settings.fps_cap}
                     tdp={game.acf.optimized_and_recommended_settings.steamos_settings.tdp_limit}
@@ -62,6 +75,17 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
                     { Array(game.acf.sdhq_rating).fill("★").map(el => el) }
                     { Array(5 - game.acf.sdhq_rating).fill("☆").map(el => el) }
                   </h3>
+                </PanelSectionRow>
+
+                <PanelSectionRow>
+                  <FocusableTitle label={`Game settings`} />
+                  <hr />
+                  <ul style={{ listStyle: 'square', margin: 0, padding: 0, marginLeft: '16px' }}>
+                    {
+                      getGamesSettingsFromHTMLMess(game.acf.optimized_and_recommended_settings.game_settings)
+                        .map(el => (<li>{el}</li>))
+                    }
+                  </ul>
                 </PanelSectionRow>
 
                 <PanelSectionRow>
