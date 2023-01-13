@@ -1,6 +1,12 @@
 # Steam Deck HQ Decky plugin
 
-This plugin add SteamOS and in-game settings based on [Steam Deck HQ](https://steamdeckhq.com/) reviews.
+<p align="center">
+  <img src="https://github.com/CapitaineJSparrow/steam-deck-hq-plugin/raw/master/img.png" width="400" />
+</p>
+
+<p align="center">
+<i>This plugin add SteamOS and in-game settings based on Steam Deck HQ reviews.</i>
+</p>
 
 ## Development
 
