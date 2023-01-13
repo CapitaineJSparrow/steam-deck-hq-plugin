@@ -1,4 +1,4 @@
-import { VFC, useEffect, useState } from "react";
+import { VFC, useEffect, useContext } from "react";
 // @ts-ignore
 import logo from "../../assets/logo.png";
 import {
@@ -6,23 +6,20 @@ import {
   PanelSectionRow,
   ServerAPI,
 } from "decky-frontend-lib";
-import Config from "../lib/Config";
 import { HQResult } from "../types";
 import SteamOSSettings from "./ui/SteamOSSettings";
 import FocusableTitle from "./ui/FocusableTitle";
 import BatteryUsage from "./ui/BatteryUsage";
-import {getGamesSettingsFromHTMLMess} from "../lib/sanitizeWordpressCode";
+import { getGamesSettingsFromHTMLMess } from "../lib/sanitizeWordpressCode";
+import {GlobalContext} from "../context";
+import Config from "../lib/Config";
 
 export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
-  const [data, setData] = useState<HQResult[]>([]);
+  const { data, setData } = useContext(GlobalContext);
 
   useEffect(() => {
     if (Config.pageId === -1) return;
-    serverAPI!.callPluginMethod("add", { appid: Config.pageId }).then(d => setData(d["result"] as unknown as HQResult[]));
-
-    return () => {
-      setData([])
-    }
+    serverAPI!.callPluginMethod("add", { appid: Config.pageId }).then((_d) => setData(_d["result"] as unknown as HQResult[]));
   }, []);
 
   const game = data[0] as HQResult | undefined;
