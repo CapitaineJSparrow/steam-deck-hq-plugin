@@ -1,16 +1,13 @@
 {
   "name": "decky-plugin-template",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A template to quickly create decky plugins from scratch, based on TypeScript and webpack",
-  "scripts": {
-    "prepare": "touch requirements.txt && pip3 install --upgrade -r requirements.txt -t py_modules",
-    "build": "shx rm -rf dist && rollup -c",
-    "watch": "rollup -c -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SteamDeckHomebrew/decky-plugin-template.git"
+  },
+  "scripts": {
+    "zip": "zip -r plugin.zip . -x ./node_modules/\\* ./.git/\\* ./img.png"
   },
   "keywords": [
     "decky",

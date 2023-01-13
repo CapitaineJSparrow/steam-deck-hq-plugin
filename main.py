@@ -14,7 +14,7 @@ logging.basicConfig(filename="/tmp/template.log",
 logger=logging.getLogger()
 logger.setLevel(logging.INFO) # can be changed to logging.DEBUG for debugging issues
 
-def use_urllib(appid):
+def get_sdhq_review_by_appid(appid):
     api_url = f"https://steamdeckhq.com/wp-json/wp/v2/game-reviews/?meta_key=steam_app_id&meta_value={appid}"
     ctx = ssl.create_default_context()
     ctx.check_hostname = False
@@ -28,7 +28,7 @@ def use_urllib(appid):
 class Plugin:
     # A normal method. It can be called from JavaScript using call_plugin_function("method_1", argument1, argument2)
     async def get_sdhq_data(self, appid):
-        return use_urllib(appid)
+        return get_sdhq_review_by_appid(appid)
 
     # Asyncio-compatible long-running code, executed in a task when the plugin is loaded
     async def _main(self):

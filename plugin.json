@@ -1,10 +1,10 @@
 {
   "name": "Steam Deck HQ",
-  "author": "John Doe",
+  "author": "Captain J. Sparrow",
   "flags": ["debug"],
   "publish": {
     "tags": ["template"],
     "description": "Steam Deck HQ",
-    "image": "https://opengraph.githubassets.com/1/SteamDeckHomebrew/PluginLoader"
+    "image": "https://steamdeckhq.com/wp-content/uploads/2023/01/sdhq-logo.png"
   }
 }

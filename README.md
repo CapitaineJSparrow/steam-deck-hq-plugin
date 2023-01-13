@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-<i>This plugin add SteamOS and in-game settings based on Steam Deck HQ reviews.</i>
+<i>This plugin add SteamOS and in-game settings based on Steam Deck HQ reviews. It's still in development and not yet in Decky store.</i>
 </p>
 
 ## Development
