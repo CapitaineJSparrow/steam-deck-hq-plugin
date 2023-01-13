@@ -3,6 +3,5 @@ import {HQResult} from "./types";
 
 export const GlobalContext = React.createContext({
   setData: (_d: HQResult[]) => {},
-  data: [] as HQResult[]
+  data: undefined as HQResult[] | undefined
 });
-

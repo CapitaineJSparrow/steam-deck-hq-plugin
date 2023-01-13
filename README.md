@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-<i>This plugin add SteamOS and in-game settings based on Steam Deck HQ reviews.</i>
+<i>Plugin for Steam Deck that gives you access to the features of our Steam Deck HQ website, including game presentations, reviews, and performance profiles. It also allows you to customize your gaming experience by accessing Steam OS settings. It's still in development and not yet in Decky store.</i>
 </p>
 
 ## Development

@@ -22,7 +22,7 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
     serverAPI!.callPluginMethod("get_sdhq_data", { appid: Config.pageId }).then((_d) => setData(_d["result"] as unknown as HQResult[]));
   }, []);
 
-  const game = data[0] as HQResult | undefined;
+  const game = data ? data[0] : undefined;
 
   if (Config.pageId === -1) {
     return (
@@ -96,7 +96,7 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
         }
       </PanelSectionRow>
       <PanelSectionRow>
-        <div style={{display: "flex", justifyContent: "center", margin: 0 }}>
+        <div style={{ display: "flex", justifyContent: "center", margin: 0 }}>
             <img width={200} src={logo} />
         </div>
         <FocusableTitle label={"Visit Steam Deck HQ website"} />
