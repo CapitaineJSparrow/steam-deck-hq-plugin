@@ -11,7 +11,7 @@ import SteamOSSettings from "./ui/SteamOSSettings";
 import FocusableTitle from "./ui/FocusableTitle";
 import BatteryUsage from "./ui/BatteryUsage";
 import { getGamesSettingsFromHTMLMess } from "../lib/sanitizeWordpressCode";
-import {GlobalContext} from "../context";
+import { GlobalContext } from "../context";
 import Config from "../lib/Config";
 
 export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
@@ -19,7 +19,7 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
 
   useEffect(() => {
     if (Config.pageId === -1) return;
-    serverAPI!.callPluginMethod("add", { appid: Config.pageId }).then((_d) => setData(_d["result"] as unknown as HQResult[]));
+    serverAPI!.callPluginMethod("get_sdhq_data", { appid: Config.pageId }).then((_d) => setData(_d["result"] as unknown as HQResult[]));
   }, []);
 
   const game = data[0] as HQResult | undefined;
