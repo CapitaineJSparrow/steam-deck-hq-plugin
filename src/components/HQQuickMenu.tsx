@@ -11,15 +11,7 @@ import { HQResult } from "../types";
 import SteamOSSettings from "./ui/SteamOSSettings";
 import FocusableTitle from "./ui/FocusableTitle";
 import BatteryUsage from "./ui/BatteryUsage";
-
-const getGamesSettingsFromHTMLMess = (s: string) => {
-  return s
-    .replace(/<[^>]*>?/gm, '')
-    .replace(/\r/g, '@')
-    .replace(/\n/g, '@')
-    .split('@')
-    .filter(el => el.length > 0)
-}
+import {getGamesSettingsFromHTMLMess} from "../lib/sanitizeWordpressCode";
 
 export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
   const [data, setData] = useState<HQResult[]>([]);
