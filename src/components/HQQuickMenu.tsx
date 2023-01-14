@@ -18,8 +18,13 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
   const { data, setData } = useContext(GlobalContext);
 
   useEffect(() => {
-    if (Config.pageId === -1) return;
-    serverAPI!.callPluginMethod("get_sdhq_data", { appid: Config.pageId }).then((_d) => setData(_d["result"] as unknown as HQResult[]));
+    if (Config.pageId === -1) {
+      return;
+    }
+
+    serverAPI!
+      .callPluginMethod("get_sdhq_data", { appid: Config.pageId })
+      .then((d) => setData(d["result"] as HQResult[]));
   }, []);
 
   const game = data ? data[0] : undefined;

@@ -7,7 +7,8 @@
     "url": "git+https://github.com/SteamDeckHomebrew/decky-plugin-template.git"
   },
   "scripts": {
-    "zip": "zip -r plugin.zip . -x ./node_modules/\\* ./.git/\\* ./img.png"
+    "zip": "zip -r plugin.zip . -x ./node_modules/\\* ./.git/\\* ./img.png",
+    "build": "shx rm -rf dist && rollup -c"
   },
   "keywords": [
     "decky",

@@ -10,10 +10,11 @@
 
 ## Development
 
-```
+```bash
 npm i -g pnpm
 pnpm i
 pnpm build
-rsync -a . deck@<DECKIP>:/home/deck/homebrew/plugins/sdhq # Do a full reboot if you do it for the first time
+# Do a full reboot after this if you do it for the first time
+rsync -a . deck@<DECKIP>:/home/deck/homebrew/plugins/sdhq
 ssh deck@<DECKIP> "echo 'deck_root_password' | sudo -S systemctl restart plugin_loader"
 ```
