@@ -12,7 +12,7 @@ import FocusableTitle from "./ui/FocusableTitle";
 import BatteryUsage from "./ui/BatteryUsage";
 import { getGamesSettingsFromHTMLMess } from "../lib/sanitizeWordpressCode";
 import { GlobalContext } from "../context";
-import Config from "../lib/Config";
+import ConfigStore from "../lib/ConfigStore";
 
 export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
   const { data, setData } = useContext(GlobalContext);
@@ -24,16 +24,12 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
       const storeGame = result.find((r: any) => r.url.includes("steampowered.com/app/")) as typeof res[0] | undefined;
       const storeId = !storeGame ? -1 : Number(storeGame.url.split("/")[storeGame.url.split("/").length - 3]);
 
-      console.log({
-        Config
-      })
-
-      if (Config.pageId !== -1) {
+      if (ConfigStore.pageId !== -1) {
         serverAPI!
-          .callPluginMethod("get_sdhq_data", { appid: Config.pageId })
+          .callPluginMethod("get_sdhq_data", { appid: ConfigStore.pageId })
           .then((d) => setData(d["result"] as HQResult[]));
       }
-      else if (storeId !== -1 && !Config.locked) {
+      else if (storeId !== -1 && !ConfigStore.locked) {
         serverAPI!
           .callPluginMethod("get_sdhq_data", { appid: storeId })
           .then((d) => {
@@ -46,13 +42,13 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
 
   const game = data ? data[0] : undefined;
 
-  if (Config.pageId === -1 && !fromStore) {
+  if (ConfigStore.pageId === -1 && !fromStore) {
     return (
       <PanelSectionRow>
         <h3>Visit a game in your game library to get Steam Deck HQ review !</h3>
         <pre>
           {
-            JSON.stringify(Config, null ,2)
+            JSON.stringify(ConfigStore, null ,2)
           }
         </pre>
       </PanelSectionRow>

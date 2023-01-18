@@ -28,8 +28,8 @@ export function patchLibraryApp(serverAPI: ServerAPI) {
                 ret2.props.children?.[1]?.props.children.props.children.splice(
                   1,
                   0,
-                  <div className="sdhq-plugin">
-                    <HQLibraryDetail pageId={pageId} />
+                  <div style={{ margin: 0 }} className="sdhq-plugin">
+                    <HQLibraryDetail serverAPI={serverAPI} pageId={pageId} />
                   </div>
                 )
               }

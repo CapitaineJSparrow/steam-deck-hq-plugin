@@ -6,7 +6,7 @@ import { GlobalContext } from "./context";
 import { useState } from "react";
 import { HQResult } from "./types";
 import { SteamClient } from "./types";
-import Config from "./lib/Config";
+import ConfigStore from "./lib/ConfigStore";
 
 declare global
 {
@@ -29,9 +29,8 @@ export default definePlugin((serverApi: ServerAPI) => {
 
   const startHook = SteamClient.Apps.RegisterForGameActionStart((_: number, id: string) =>
   {
-    console.log("LOCKING CONFIG")
-    Config.pageId = +id;
-    Config.locked = true;
+    ConfigStore.pageId = +id;
+    ConfigStore.locked = true;
   });
 
   return {

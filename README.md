@@ -11,10 +11,13 @@
 ## Development
 
 ```bash
+# set correct IP here
+export DECK_IP=192.168.1.1
+# Deck's root password
+export DECK_PWD=deck
 npm i -g pnpm
 pnpm i
 pnpm build
-# Do a full reboot after this if you do it for the first time
-rsync -a . deck@<DECKIP>:/home/deck/homebrew/plugins/sdhq
-ssh deck@<DECKIP> "echo 'deck_root_password' | sudo -S systemctl restart plugin_loader"
+rsync -a . deck@$DECK_IP:/home/deck/homebrew/plugins/sdhq
+ssh deck@$DECK_IP "echo '$DECK_PWD' | sudo -S systemctl restart plugin_loader"
 ```
