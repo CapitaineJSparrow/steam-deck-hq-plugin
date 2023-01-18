@@ -5,6 +5,14 @@ import { patchLibraryApp } from "./lib/patchs/patchLibraryApp";
 import { GlobalContext } from "./context";
 import { useState } from "react";
 import { HQResult } from "./types";
+import { SteamClient } from "./types";
+import Config from "./lib/Config";
+
+declare global
+{
+  // @ts-ignore
+  let SteamClient: SteamClient;
+}
 
 const App = ({ serverApi }: { serverApi: ServerAPI }) => {
   const [data, setData] = useState<HQResult[]>([]);
@@ -19,12 +27,20 @@ const App = ({ serverApi }: { serverApi: ServerAPI }) => {
 export default definePlugin((serverApi: ServerAPI) => {
   const libraryPatch = patchLibraryApp(serverApi);
 
+  const startHook = SteamClient.Apps.RegisterForGameActionStart((_: number, id: string) =>
+  {
+    console.log("LOCKING CONFIG")
+    Config.pageId = +id;
+    Config.locked = true;
+  });
+
   return {
     title: <div className={staticClasses.Title}>Steam Deck HQ</div>,
     content: <App serverApi={serverApi} />,
     icon: <FaGamepad />,
     alwaysRender: true,
     onDismount() {
+      startHook.unregister();
       serverApi.routerHook.removePatch('/library/app/:appid', libraryPatch);
     },
   };

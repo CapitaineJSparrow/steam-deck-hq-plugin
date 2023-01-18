@@ -1,4 +1,3 @@
-import Config from "../Config";
 import {afterPatch, ServerAPI, wrapReactType } from "decky-frontend-lib";
 import { ReactElement } from "react";
 import HQLibraryDetail from "../../components/HQLibraryDetail";
@@ -17,7 +16,7 @@ export function patchLibraryApp(serverAPI: ServerAPI) {
             'type',
             (_2: Record<string, unknown>[], ret2: ReactElement) => {
               let parts = window.location.href.split('/');
-              Config.pageId = Number(parts[parts.length - 1]);
+              const pageId = Number(parts[parts.length - 1]);
 
               const alreadySpliced = Boolean(
                 ret2.props?.children?.[1]?.props.children.props.children.find(
@@ -30,7 +29,7 @@ export function patchLibraryApp(serverAPI: ServerAPI) {
                   1,
                   0,
                   <div className="sdhq-plugin">
-                    <HQLibraryDetail />
+                    <HQLibraryDetail pageId={pageId} />
                   </div>
                 )
               }

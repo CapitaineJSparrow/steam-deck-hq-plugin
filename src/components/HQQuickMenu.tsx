@@ -24,19 +24,22 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
       const storeGame = result.find((r: any) => r.url.includes("steampowered.com/app/")) as typeof res[0] | undefined;
       const storeId = !storeGame ? -1 : Number(storeGame.url.split("/")[storeGame.url.split("/").length - 3]);
 
-      if (storeId !== -1) {
+      console.log({
+        Config
+      })
+
+      if (Config.pageId !== -1) {
+        serverAPI!
+          .callPluginMethod("get_sdhq_data", { appid: Config.pageId })
+          .then((d) => setData(d["result"] as HQResult[]));
+      }
+      else if (storeId !== -1 && !Config.locked) {
         serverAPI!
           .callPluginMethod("get_sdhq_data", { appid: storeId })
           .then((d) => {
             setFromStore(true);
             setData(d["result"] as HQResult[]);
           });
-      }
-
-      if (Config.pageId !== -1) {
-        serverAPI!
-          .callPluginMethod("get_sdhq_data", { appid: Config.pageId })
-          .then((d) => setData(d["result"] as HQResult[]));
       }
     });
   }, []);
@@ -47,6 +50,11 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
     return (
       <PanelSectionRow>
         <h3>Visit a game in your game library to get Steam Deck HQ review !</h3>
+        <pre>
+          {
+            JSON.stringify(Config, null ,2)
+          }
+        </pre>
       </PanelSectionRow>
     )
   }
