@@ -1,7 +1,7 @@
 # Steam Deck HQ Decky plugin
 
 <p align="center">
-  <img src="https://github.com/CapitaineJSparrow/steam-deck-hq-plugin/raw/master/assets/img.png" width="400" />
+  <img src="https://github.com/CapitaineJSparrow/steam-deck-hq-plugin/raw/master/img.png" width="400" />
 </p>
 
 <p align="center">

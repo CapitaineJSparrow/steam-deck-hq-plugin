@@ -46,11 +46,6 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
     return (
       <PanelSectionRow>
         <h3>Visit a game in your game library to get Steam Deck HQ review !</h3>
-        <pre>
-          {
-            JSON.stringify(ConfigStore, null ,2)
-          }
-        </pre>
       </PanelSectionRow>
     )
   }
@@ -109,11 +104,6 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
                     duration={game.acf.optimized_and_recommended_settings.projected_battery_usage_and_temperature.gameplay_time}
                   />
                 </PanelSectionRow>
-
-                <PanelSectionRow>
-                  <FocusableTitle label={"Description"} />
-                  <p dangerouslySetInnerHTML={{ __html: game.excerpt.rendered }} />
-                </PanelSectionRow>
               </span>
             )
         }
@@ -122,7 +112,9 @@ export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
         <div style={{ display: "flex", justifyContent: "center", margin: 0 }}>
             <img width={200} src={logo} />
         </div>
-        <FocusableTitle label={"Visit Steam Deck HQ website"} />
+        <FocusableTitle
+          label={"Steam Deck HQ"}
+        />
       </PanelSectionRow>
     </PanelSection>
   );

@@ -11,7 +11,8 @@ const buttonStyles = {
   color:"#FFF",
   border:"none",
   fontSize: "16px",
-  padding: "12px 8px"
+  padding: "12px 8px",
+  width: "100%"
 };
 
 const blockquoteStyles = {
@@ -21,7 +22,8 @@ const blockquoteStyles = {
   display: "-webkit-box",
   "-webkit-line-clamp": "3",
   "-webkit-box-orient": "vertical",
-  marginTop: 0
+  margin: 0,
+  marginBottom: "16px"
 };
 
 const HQLibraryDetail = ({ pageId, serverAPI }: { pageId: number, serverAPI: ServerAPI }) => {
@@ -54,11 +56,11 @@ const HQLibraryDetail = ({ pageId, serverAPI }: { pageId: number, serverAPI: Ser
   }
 
   return (
-    <div style={{ display: 'flex', padding: "20px" }}>
-      <div style={{ flex: "0 0 250px" }}>
+    <div style={{ display: 'flex', padding: "24px" }}>
+      <div style={{ flex: "0 0 210px" }}>
         <img style={{ width: "80%", margin: "0 auto", display: "block", marginBottom: "12px" }} src={logo} />
         <Button style={buttonStyles} onClick={() => handleBtnClick(game.link)}>
-          {"View review on SDHQ website"}
+          {"View review on SDHQ"}
         </Button>
       </div>
       <div style={{ flex: "1", paddingLeft: "20px" }}>
