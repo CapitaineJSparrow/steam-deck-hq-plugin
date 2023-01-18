@@ -4,6 +4,7 @@ import urllib.request
 import logging
 import json
 import ssl
+from injector import get_tabs
 
 sys.path.append(os.path.dirname(os.path.realpath(__file__))+"/py_modules")
 
@@ -26,6 +27,10 @@ def get_sdhq_review_by_appid(appid):
         return data
 
 class Plugin:
+    async def get_tabs(self):
+        tabs = await get_tabs()
+        return list(map(lambda n: { "id": n.id, "title": n.title, "url": n.url }, tabs))
+
     # A normal method. It can be called from JavaScript using call_plugin_function("method_1", argument1, argument2)
     async def get_sdhq_data(self, appid):
         return get_sdhq_review_by_appid(appid)

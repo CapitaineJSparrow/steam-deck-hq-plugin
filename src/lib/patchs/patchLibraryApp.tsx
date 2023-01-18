@@ -1,7 +1,7 @@
-import Config from "./Config";
+import Config from "../Config";
 import {afterPatch, ServerAPI, wrapReactType } from "decky-frontend-lib";
 import { ReactElement } from "react";
-import HQLibraryDetail from "../components/HQLibraryDetail";
+import HQLibraryDetail from "../../components/HQLibraryDetail";
 
 export function patchLibraryApp(serverAPI: ServerAPI) {
   return serverAPI.routerHook.addPatch(
@@ -21,7 +21,7 @@ export function patchLibraryApp(serverAPI: ServerAPI) {
 
               const alreadySpliced = Boolean(
                 ret2.props?.children?.[1]?.props.children.props.children.find(
-                  (child: ReactElement) => child?.props?.className === 'protondb-decky-indicator'
+                  (child: ReactElement) => child?.props?.className === 'sdhq-plugin'
                 )
               )
 
@@ -29,7 +29,9 @@ export function patchLibraryApp(serverAPI: ServerAPI) {
                 ret2.props.children?.[1]?.props.children.props.children.splice(
                   1,
                   0,
-                  <HQLibraryDetail />
+                  <div className="sdhq-plugin">
+                    <HQLibraryDetail />
+                  </div>
                 )
               }
 

@@ -1,3 +1,3 @@
 export default {
-  pageId: -1
+  pageId: -1,
 };

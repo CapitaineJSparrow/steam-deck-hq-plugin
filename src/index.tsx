@@ -1,7 +1,7 @@
 import { definePlugin, ServerAPI, staticClasses } from "decky-frontend-lib";
 import { FaGamepad } from "react-icons/fa";
 import { Content } from "./components/HQQuickMenu";
-import { patchLibraryApp } from "./lib/patchLibraryApp";
+import { patchLibraryApp } from "./lib/patchs/patchLibraryApp";
 import { GlobalContext } from "./context";
 import { useState } from "react";
 import { HQResult } from "./types";
@@ -25,7 +25,7 @@ export default definePlugin((serverApi: ServerAPI) => {
     icon: <FaGamepad />,
     alwaysRender: true,
     onDismount() {
-      serverApi.routerHook.removePatch('/library/app/:appid', libraryPatch)
+      serverApi.routerHook.removePatch('/library/app/:appid', libraryPatch);
     },
   };
 });

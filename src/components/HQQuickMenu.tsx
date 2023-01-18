@@ -1,4 +1,4 @@
-import { VFC, useEffect, useContext } from "react";
+import {VFC, useEffect, useContext, useState} from "react";
 // @ts-ignore
 import logo from "../../assets/logo.png";
 import {
@@ -16,20 +16,34 @@ import Config from "../lib/Config";
 
 export const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
   const { data, setData } = useContext(GlobalContext);
+  const [fromStore, setFromStore] = useState(false);
 
   useEffect(() => {
-    if (Config.pageId === -1) {
-      return;
-    }
+    serverAPI.callPluginMethod("get_tabs", {}).then((res: any) => {
+      const result = res["result"];
+      const storeGame = result.find((r: any) => r.url.includes("steampowered.com/app/")) as typeof res[0] | undefined;
+      const storeId = !storeGame ? -1 : Number(storeGame.url.split("/")[storeGame.url.split("/").length - 3]);
 
-    serverAPI!
-      .callPluginMethod("get_sdhq_data", { appid: Config.pageId })
-      .then((d) => setData(d["result"] as HQResult[]));
+      if (storeId !== -1) {
+        serverAPI!
+          .callPluginMethod("get_sdhq_data", { appid: storeId })
+          .then((d) => {
+            setFromStore(true);
+            setData(d["result"] as HQResult[]);
+          });
+      }
+
+      if (Config.pageId !== -1) {
+        serverAPI!
+          .callPluginMethod("get_sdhq_data", { appid: Config.pageId })
+          .then((d) => setData(d["result"] as HQResult[]));
+      }
+    });
   }, []);
 
   const game = data ? data[0] : undefined;
 
-  if (Config.pageId === -1) {
+  if (Config.pageId === -1 && !fromStore) {
     return (
       <PanelSectionRow>
         <h3>Visit a game in your game library to get Steam Deck HQ review !</h3>
